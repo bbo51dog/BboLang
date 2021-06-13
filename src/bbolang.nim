@@ -1,14 +1,9 @@
 import os
 import streams
 import strformat
-import terminal
 
+import error
 import virtual_machine
-
-proc error(message: string) =
-  stdout.styledWrite(fgRed, "Error: ", resetStyle)
-  stdout.writeLine(message)
-  quit 1
 
 if isMainModule:
   if paramCount() < 1:
@@ -17,4 +12,4 @@ if isMainModule:
   if not fileExists(sourceFile):
     error(fmt"File '{sourceFile}' was not exists")
   let vm = newVirtualMachine(newFileStream(sourceFile))
-  vm.exec
+  vm.run
