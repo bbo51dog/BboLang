@@ -3,6 +3,8 @@ import streams
 import strformat
 import terminal
 
+import virtual_machine
+
 proc error(message: string) =
   stdout.styledWrite(fgRed, "Error: ", resetStyle)
   stdout.writeLine(message)
@@ -14,6 +16,5 @@ if isMainModule:
   let sourceFile = commandLineParams()[0]
   if not fileExists(sourceFile):
     error(fmt"File '{sourceFile}' was not exists")
-  let stream = newFileStream(sourceFile)
-  while not stream.atEnd:
-    echo stream.readChar
+  let vm = newVirtualMachine(newFileStream(sourceFile))
+  vm.exec
