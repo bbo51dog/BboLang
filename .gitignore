@@ -3,4 +3,7 @@ bin/
 tests/*
 !tests/*.*
 
+.vscode/
+*.code-workspace
+
 .DS_Store
