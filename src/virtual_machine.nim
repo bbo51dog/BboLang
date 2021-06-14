@@ -8,12 +8,14 @@ type
     values: seq[int]
 
   OpCode {.pure.} = enum
-#    Pop = "bbb"
-    Push = "bbo"
-    Add = "bob"
-    Sub = "obb"
-    Mul = "boo"
-#    Div = "obo"
+    Add = "bbbb"
+    Sub = "bbbo"
+    Mul = "bbob"
+    Div = "bboo"
+    Push = "bobb"
+    Pop = "bobo"
+    EchoChar = "oobb"
+    EchoInt = "oobo"
 
   VirtualMachine = ref object
     stack: Stack
@@ -43,12 +45,11 @@ proc newVirtualMachine*(stream: Stream): VirtualMachine =
 proc run*(vm: VirtualMachine) =
   while not vm.stream.atEnd:
     vm.exec(vm.readOpcode)
-  echo repr vm.stack.values
 
 
 proc readOpcode(vm: VirtualMachine): OpCode =
   var rawCode = ""
-  for i in 1..3:
+  for i in 1..4:
     vm.stream.skipWhiteSpace
     rawCode.add(vm.stream.readChar)
   parseEnum[OpCode](rawCode)
@@ -72,8 +73,6 @@ proc readNum(vm: VirtualMachine): int =
 
 proc exec(vm: VirtualMachine, op: OpCode) =
   case op
-  of OpCode.Push:
-    vm.stack.push(vm.readNum)
   of OpCode.Add:
     let x = vm.stack.pop
     let y = vm.stack.pop
@@ -86,12 +85,18 @@ proc exec(vm: VirtualMachine, op: OpCode) =
     let x = vm.stack.pop
     let y = vm.stack.pop
     vm.stack.push(x * y)
-  #[
   of OpCode.Div:
     let x = vm.stack.pop
     let y = vm.stack.pop
-    vm.stack.push(x / y)
-  ]#
+    #vm.stack.push(x / y)
+  of OpCode.Push:
+    vm.stack.push(vm.readNum)
+  of OpCode.Pop:
+    discard vm.stack.pop
+  of OpCode.EchoChar:
+    stdout.write(char(vm.stack.pop))
+  of OpCode.EchoInt:
+    stdout.write($vm.stack.pop)
 
 
 proc skipWhiteSpace(stream: Stream) =
