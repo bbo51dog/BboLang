@@ -88,7 +88,7 @@ proc exec(vm: VirtualMachine, op: OpCode) =
   of OpCode.Div:
     let x = vm.stack.pop
     let y = vm.stack.pop
-    #vm.stack.push(x / y)
+    vm.stack.push(int(x / y))
   of OpCode.Push:
     vm.stack.push(vm.readNum)
   of OpCode.Pop:
