@@ -29,6 +29,8 @@ proc readOpcode(vm: VirtualMachine): OpCode
 proc readNum(vm: VirtualMachine): int
 proc exec(vm: VirtualMachine, op: OpCode)
 
+proc skipWhiteSpace(stream: Stream)
+
 proc pop(stack: Stack): int
 proc push(stack: Stack, value: int)
 
@@ -43,8 +45,13 @@ proc run*(vm: VirtualMachine) =
     vm.exec(vm.readOpcode)
   echo repr vm.stack.values
 
+
 proc readOpcode(vm: VirtualMachine): OpCode =
-  parseEnum[OpCode](vm.stream.readStr(3))
+  var rawCode = ""
+  for i in 1..3:
+    vm.stream.skipWhiteSpace
+    rawCode.add(vm.stream.readChar)
+  parseEnum[OpCode](rawCode)
 
 proc readNum(vm: VirtualMachine): int =
   if vm.stream.readChar != numSeparator:
@@ -85,6 +92,12 @@ proc exec(vm: VirtualMachine, op: OpCode) =
     let y = vm.stack.pop
     vm.stack.push(x / y)
   ]#
+
+
+proc skipWhiteSpace(stream: Stream) =
+  while stream.peekStr(1).isEmptyOrWhitespace:
+    discard stream.readChar
+
 
 proc push(stack: Stack, value: int) =
   stack.values.add(value)
