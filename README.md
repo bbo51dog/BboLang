@@ -26,3 +26,94 @@
 
 ``b``が1、``o``が0を表し、2進数で表記。
 (例) ``BboobB`` => ``1001`` => ``9``
+
+## 実行
+
+Nimbleを利用してインタプリタをビルドします。
+
+```shell-session
+$ git clone https://github.com/bbo51dog/BboLang.git
+Cloning into 'BboLang'...
+~~~
+$ cd BboLang
+$ nimble build
+  Verifying dependencies for bbolang@x.x.x
+   Building bbolang/bbolang using c backend
+```
+
+ビルド後、``BboLang/bin/``下に実行可能ファイルが作成されます。
+``nimble insatall``でインストールすれば他ディレクトリからでも使えます。
+
+```shell-session
+$ nimble install
+  Verifying dependencies for bbolang@x.x.x
+ Installing bbolang@x.x.x
+   Building bbolang/bbolang using c backend
+   Success: bbolang installed successfully.
+```
+
+BboLang実行
+
+```shell-session
+$ bbolang example.bbolang
+ output...
+```
+
+## Example
+
+### HelloWorld
+
+```text
+bobbBbooboooB
+oobb
+bobbBbboobobB
+oobb
+bobbBbbobbooB
+oobb
+bobbBbbobbooB
+oobb
+bobbBbbobbbbB
+oobb
+bobbBbobbooB
+oobb
+bobbBboooooB
+oobb
+bobbBbobobbbB
+oobb
+bobbBbbobbbbB
+oobb
+bobbBbbbooboB
+oobb
+bobbBbbobbooB
+oobb
+bobbBbboobooB
+oobb
+bobbBboooobB
+oobb
+```
+
+```shell-session
+$ bbolang HelloWorld.bbolang
+Hello, World!
+```
+
+``bobbB~~B``でスタックに文字コードをpushし、oobbで文字を出力。
+(ループが実装されていないため1文字毎に出力。いつかラベルなど実装するかもしれません。)
+
+### 四則演算
+
+```text
+bobbBbboB
+bobbBbooB
+bbob
+bobbBbbB
+bbbb
+oobo
+```
+
+```shell-session
+$ bbolang Calculate.bbolang
+27
+```
+
+``6 * 4 + 3``の結果を出力。
