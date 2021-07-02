@@ -2,6 +2,7 @@ bin/
 
 tests/*
 !tests/*.*
+!tests/code/
 
 .vscode/
 *.code-workspace

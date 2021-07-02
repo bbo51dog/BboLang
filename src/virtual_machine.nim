@@ -1,3 +1,5 @@
+import streams
+
 import operation
 
 type
@@ -7,9 +9,10 @@ type
   VirtualMachine = ref object
     stack: Stack
     operations: seq[Operation]
+    outputStream: Stream
 
 
-proc newVirtualMachine*(operations: openArray[Operation]): VirtualMachine
+proc newVirtualMachine*(operations: openArray[Operation], outputStream: Stream): VirtualMachine
 proc run*(vm: VirtualMachine)
 
 proc exec(vm: VirtualMachine, op: Operation)
@@ -18,10 +21,11 @@ proc pop(stack: Stack): int
 proc push(stack: Stack, value: int)
 
 
-proc newVirtualMachine*(operations: openArray[Operation]): VirtualMachine =
+proc newVirtualMachine*(operations: openArray[Operation], outputStream: Stream): VirtualMachine =
   new result
   result.stack = Stack()
   result.operations = @operations
+  result.outputStream = outputStream
 
 proc run*(vm: VirtualMachine) =
   for op in vm.operations:
@@ -51,9 +55,9 @@ proc exec(vm: VirtualMachine, op: Operation) =
   of OpCode.Pop:
     discard vm.stack.pop
   of OpCode.EchoChar:
-    stdout.write(char(vm.stack.pop))
+    vm.outputStream.write(char(vm.stack.pop))
   of OpCode.EchoInt:
-    stdout.write($vm.stack.pop)
+    vm.outputStream.write($vm.stack.pop)
 
 
 proc push(stack: Stack, value: int) =

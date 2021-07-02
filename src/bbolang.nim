@@ -14,5 +14,5 @@ if isMainModule:
     error(fmt"File '{sourceFile}' was not exists")
   let parser = newParser(newFileStream(sourceFile))
   parser.parse
-  let vm = newVirtualMachine(parser.operations)
+  let vm = newVirtualMachine(parser.operations, newFileStream(stdout))
   vm.run
