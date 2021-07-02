@@ -33,19 +33,19 @@ proc exec(vm: VirtualMachine, op: Operation) =
   of OpCode.Add:
     let x = vm.stack.pop
     let y = vm.stack.pop
-    vm.stack.push(x + y)
+    vm.stack.push(y + x)
   of OpCode.Sub:
     let x = vm.stack.pop
     let y = vm.stack.pop
-    vm.stack.push(x - y)
+    vm.stack.push(y - x)
   of OpCode.Mul:
     let x = vm.stack.pop
     let y = vm.stack.pop
-    vm.stack.push(x * y)
+    vm.stack.push(y * x)
   of OpCode.Div:
     let x = vm.stack.pop
     let y = vm.stack.pop
-    vm.stack.push(int(x / y))
+    vm.stack.push(int(y / x))
   of OpCode.Push:
     vm.stack.push(op.opland)
   of OpCode.Pop:
