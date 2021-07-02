@@ -26,7 +26,12 @@ proc newParser*(stream: Stream): Parser =
 
 proc parse*(self: Parser) =
   while not self.stream.atEnd:
-    let op = newOperation(self.stream.readOpcode)
+    let opcode = self.stream.readOpcode
+    var op: Operation
+    if opcode.needOpLand:
+      op = newOperation(opcode, newOpLand(self.stream.readNum))
+    else:
+      op = newOperation(opcode)
     self.operations.add(op)
     self.stream.skipWhiteSpace
 

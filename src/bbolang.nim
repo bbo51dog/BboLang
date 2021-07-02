@@ -3,6 +3,7 @@ import streams
 import strformat
 
 import error
+import parser
 import virtual_machine
 
 if isMainModule:
@@ -11,5 +12,7 @@ if isMainModule:
   let sourceFile = commandLineParams()[0]
   if not fileExists(sourceFile):
     error(fmt"File '{sourceFile}' was not exists")
-  let vm = newVirtualMachine(newFileStream(sourceFile))
+  let parser = newParser(newFileStream(sourceFile))
+  parser.parse
+  let vm = newVirtualMachine(parser.operations)
   vm.run
