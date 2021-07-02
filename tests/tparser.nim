@@ -2,6 +2,7 @@ import unittest
 
 import streams
 
+import operation
 import parser
 
 suite "Parser":
@@ -9,6 +10,10 @@ suite "Parser":
     let source = """
     oobo
     """
+    let expect = [
+      newOperation(OpCode.EchoInt)
+    ]
     let parser = newParser(newStringStream(source))
     parser.parse
-    echo repr parser
+    for i, op in parser.operations:
+      assert op[] == expect[i][]

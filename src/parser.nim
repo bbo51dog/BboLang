@@ -2,7 +2,7 @@ import streams
 import strutils
 
 import error
-import virtual_machine
+import operation
 
 type
   Parser = ref object
@@ -26,7 +26,6 @@ proc newParser*(stream: Stream): Parser =
 
 proc parse*(self: Parser) =
   while not self.stream.atEnd:
-    echo self.stream.atEnd
     let op = newOperation(self.stream.readOpcode)
     self.operations.add(op)
     self.stream.skipWhiteSpace

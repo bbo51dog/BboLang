@@ -1,21 +1,9 @@
 import error
+import operation
 
 type
   Stack = ref object
     values: seq[int]
-
-  Operation* = ref object
-    opcode: OpCode
-
-  OpCode* {.pure.} = enum
-    Add = "bbbb"
-    Sub = "bbbo"
-    Mul = "bbob"
-    Div = "bboo"
-    Push = "bobb"
-    Pop = "bobo"
-    EchoChar = "oobb"
-    EchoInt = "oobo"
 
   VirtualMachine = ref object
     stack: Stack
@@ -23,8 +11,6 @@ type
 
 proc newVirtualMachine*(): VirtualMachine
 proc run*(vm: VirtualMachine)
-
-proc newOperation*(opcode: OpCode): Operation
 
 proc exec(vm: VirtualMachine, op: OpCode)
 
@@ -42,11 +28,6 @@ proc run*(vm: VirtualMachine) =
     vm.exec(vm.readOpcode)
   ]#
   discard
-
-
-proc newOperation*(opcode: OpCode): Operation =
-  new result
-  result.opcode = opcode
 
 
 proc exec(vm: VirtualMachine, op: OpCode) =
