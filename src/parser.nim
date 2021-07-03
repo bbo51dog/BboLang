@@ -29,7 +29,7 @@ proc parse*(self: Parser) =
     let opcode = self.stream.readOpcode
     var op: Operation
     if opcode.needOpLand:
-      op = newOperation(opcode, newOpLand(self.stream.readNum))
+      op = newOperation(opcode, newOperand(self.stream.readNum))
     else:
       op = newOperation(opcode)
     self.operations.add(op)

@@ -51,7 +51,7 @@ proc exec(vm: VirtualMachine, op: Operation) =
     let y = vm.stack.pop
     vm.stack.push(int(y / x))
   of OpCode.Push:
-    vm.stack.push(op.opland)
+    vm.stack.push(op.operand)
   of OpCode.Pop:
     discard vm.stack.pop
   of OpCode.EchoChar:

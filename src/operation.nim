@@ -1,9 +1,9 @@
 type
   Operation* = ref object
     opcode*: OpCode
-    opland*: OpLand
+    operand*: Operand
 
-  OpLand* = ref object
+  Operand* = ref object
     value: int
 
   OpCode* {.pure.} = enum
@@ -21,20 +21,20 @@ const needOpLandList = [
 ]
 
 
-proc newOperation*(opcode: OpCode, opland: OpLand = nil): Operation
-proc newOpLand*(value: int): OpLand
+proc newOperation*(opcode: OpCode, operand: Operand = nil): Operation
+proc newOperand*(value: int): Operand
 
 proc needOpLand*(opcode: OpCode): bool
 
-converter toInt*(x: OpLand): int
+converter toInt*(x: Operand): int
 
 
-proc newOperation*(opcode: OpCode, opland: OpLand = nil): Operation =
+proc newOperation*(opcode: OpCode, operand: Operand = nil): Operation =
   new result
   result.opcode = opcode
-  result.opland = opland
+  result.operand = operand
 
-proc newOpLand*(value: int): OpLand =
+proc newOperand*(value: int): Operand =
   new result
   result.value = value
 
@@ -43,5 +43,5 @@ proc needOpLand*(opcode: OpCode): bool =
   needOpLandList.contains(opcode)
 
 
-converter toInt*(x: OpLand): int =
+converter toInt*(x: Operand): int =
   result = x.value
