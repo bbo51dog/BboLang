@@ -43,6 +43,7 @@ proc readOpcode(stream: Stream): OpCode =
   parseEnum[OpCode](rawCode)
 
 proc readNum(stream: Stream): int =
+  stream.skipWhiteSpace
   if stream.readChar != numSeparator:
     error("Invalid number")
   var rowNum = ""
@@ -56,6 +57,7 @@ proc readNum(stream: Stream): int =
       error("Invalid number")
     if stream.atEnd:
       error("Invalid number")
+    stream.skipWhiteSpace
   discard stream.readChar
   fromBin[int](rowNum)
 
