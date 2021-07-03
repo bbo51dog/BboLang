@@ -1,4 +1,5 @@
 import streams
+import tables
 
 import operation
 
@@ -9,7 +10,9 @@ type
   VirtualMachine = ref object
     stack: Stack
     operations: seq[Operation]
+    currentOpIndex: int
     outputStream: Stream
+    labels: Table[int, int]
 
 
 proc newVirtualMachine*(operations: openArray[Operation], outputStream: Stream): VirtualMachine
@@ -26,10 +29,14 @@ proc newVirtualMachine*(operations: openArray[Operation], outputStream: Stream):
   result.stack = Stack()
   result.operations = @operations
   result.outputStream = outputStream
+  for i, op in operations:
+    if op.opcode == OpCode.Label:
+      result.labels[op.operand] = i
 
 proc run*(vm: VirtualMachine) =
-  for op in vm.operations:
-    vm.exec(op)
+  while vm.currentOpIndex < vm.operations.len:
+    vm.exec(vm.operations[vm.currentOpIndex])
+    vm.currentOpIndex += 1
 
 
 proc exec(vm: VirtualMachine, op: Operation) =
@@ -54,6 +61,13 @@ proc exec(vm: VirtualMachine, op: Operation) =
     vm.stack.push(op.operand)
   of OpCode.Pop:
     discard vm.stack.pop
+  of OpCode.Label:
+    discard
+  of OpCode.Jump:
+    vm.currentOpIndex = vm.labels[op.operand]
+  of OpCode.JumpEq:
+    if vm.stack.pop == vm.stack.pop:
+      vm.currentOpIndex = vm.labels[op.operand]
   of OpCode.EchoChar:
     vm.outputStream.write(char(vm.stack.pop))
   of OpCode.EchoInt:

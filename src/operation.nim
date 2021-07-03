@@ -13,11 +13,17 @@ type
     Div = "bboo"
     Push = "bobb"
     Pop = "bobo"
+    Label = "obbb"
+    Jump = "obbo"
+    JumpEq = "obob"
     EchoChar = "oobb"
     EchoInt = "oobo"
 
 const needOpLandList = [
-  OpCode.Push
+  OpCode.Push,
+  OpCode.Label,
+  OpCode.Jump,
+  OpCode.JumpEq,
 ]
 
 
