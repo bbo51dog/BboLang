@@ -1,6 +1,8 @@
 import streams
+import strformat
 import tables
 
+import error
 import operation
 
 type
@@ -23,6 +25,7 @@ proc newVirtualMachine*(operations: openArray[Operation], outputStream: Stream):
 proc run*(vm: VirtualMachine)
 
 proc exec(vm: VirtualMachine, op: Operation)
+proc jump(vm: VirtualMachine, label: int)
 
 proc pop(stack: Stack): int
 proc push(stack: Stack, value: int)
@@ -80,24 +83,33 @@ proc exec(vm: VirtualMachine, op: Operation) =
   of OpCode.Label:
     discard
   of OpCode.Jump:
-    vm.currentOpIndex = vm.labels[op.operand]
+    vm.jump(op.operand)
   of OpCode.JumpEq:
     if vm.stack.pop == vm.stack.pop:
-      vm.currentOpIndex = vm.labels[op.operand]
+      vm.jump(op.operand)
   of OpCode.EchoChar:
     vm.outputStream.write(char(vm.stack.pop))
   of OpCode.EchoInt:
     vm.outputStream.write($vm.stack.pop)
+
+proc jump(vm: VirtualMachine, label: int) =
+  if not vm.labels.hasKey(label):
+    error(fmt"Label '{label}' not found")
+  vm.currentOpIndex = vm.labels[label]
 
 
 proc push(stack: Stack, value: int) =
   stack.values.add(value)
 
 proc pop(stack: Stack): int =
+  if stack.values.len == 0:
+    error("Stack is empty")
   stack.values.pop
 
 
 proc load(heap: Heap, address: int): int =
+  if not heap.values.hasKey(address):
+    error(fmt"Heap address '{address}' not found")
   heap.values[address]
 
 proc store(heap: Heap, address: int, value: int) =
