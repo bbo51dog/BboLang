@@ -15,6 +15,7 @@ type
   VirtualMachine = ref object
     stack: Stack
     heap: Heap
+    callStack: Stack
     operations: seq[Operation]
     currentOpIndex: int
     outputStream: Stream
@@ -25,7 +26,8 @@ proc newVirtualMachine*(operations: openArray[Operation], outputStream: Stream):
 proc run*(vm: VirtualMachine)
 
 proc exec(vm: VirtualMachine, op: Operation)
-proc jump(vm: VirtualMachine, label: int)
+proc jumpToLabel(vm: VirtualMachine, label: int)
+proc jumpToAddress(vm: VirtualMachine, address: int)
 
 proc pop(stack: Stack): int
 proc push(stack: Stack, value: int)
@@ -38,6 +40,7 @@ proc newVirtualMachine*(operations: openArray[Operation], outputStream: Stream):
   new result
   result.stack = Stack()
   result.heap = Heap()
+  result.callStack = Stack()
   result.operations = @operations
   result.outputStream = outputStream
   for i, op in operations:
@@ -83,19 +86,27 @@ proc exec(vm: VirtualMachine, op: Operation) =
   of OpCode.Label:
     discard
   of OpCode.Jump:
-    vm.jump(op.operand)
+    vm.jumpToLabel(op.operand)
   of OpCode.JumpEq:
     if vm.stack.pop == vm.stack.pop:
-      vm.jump(op.operand)
+      vm.jumpToLabel(op.operand)
+  of OpCode.Call:
+    vm.callStack.push(vm.currentOpIndex)
+    vm.jumpToLabel(op.operand)
+  of OpCode.Return:
+    vm.jumpToAddress(vm.callStack.pop)
   of OpCode.EchoChar:
     vm.outputStream.write(char(vm.stack.pop))
   of OpCode.EchoInt:
     vm.outputStream.write($vm.stack.pop)
 
-proc jump(vm: VirtualMachine, label: int) =
+proc jumpToLabel(vm: VirtualMachine, label: int) =
   if not vm.labels.hasKey(label):
     error(fmt"Label '{label}' not found")
   vm.currentOpIndex = vm.labels[label]
+
+proc jumpToAddress(vm: VirtualMachine, address: int) =
+  vm.currentOpIndex = address
 
 
 proc push(stack: Stack, value: int) =

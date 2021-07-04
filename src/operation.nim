@@ -21,7 +21,9 @@ type
     Label = "obooo"
     Jump = "oboob"
     JumpEq = "obobo"
-    
+    Call = "obobb"
+    Return = "obboo"
+
     EchoChar = "ooooo"
     EchoInt = "oooob"
 
@@ -32,6 +34,7 @@ const needOpLandList = [
   OpCode.Label,
   OpCode.Jump,
   OpCode.JumpEq,
+  OpCode.Call,
 ]
 
 

@@ -1,0 +1,12 @@
+boooo BbbB #3
+obobb BoB #JUMP 0
+obobb BoB #JUMP 0
+obobb BbB #JUMP 1
+
+obooo BoB #LABEL 0
+boooo BboB #2
+bbobo #MUL
+obboo #RETURN
+
+obooo BbB #LABEL 1
+oooob

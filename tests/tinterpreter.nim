@@ -33,3 +33,6 @@ suite "Interpreter":
 
   test "Heap":
     assertInterpreter("tests/code/Heap.bbolang", $7)
+
+  test "Subroutine":
+    assertInterpreter("tests/code/Subroutine.bbolang", $12)
