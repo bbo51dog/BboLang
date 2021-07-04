@@ -20,8 +20,8 @@ suite "Interpreter":
   test "Calculate":
     assert stringInterpreter("tests/code/Calculate.bbolang") == $8
 
-  test "Label":
-    assert stringInterpreter("tests/code/Label.bbolang") == $5
+  test "Jump":
+    assert stringInterpreter("tests/code/Jump.bbolang") == $5
 
-  test "LabelEq":
-    assert stringInterpreter("tests/code/LabelEq.bbolang") == $4
+  test "JupIf":
+    assert stringInterpreter("tests/code/JumpIf.bbolang") == $4
