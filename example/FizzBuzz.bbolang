@@ -1,0 +1,94 @@
+boooo BoB
+boobb BoB
+
+obooo BoB # LABEL 0
+boobo BoB
+boooo BbbbbobooooboobooooooB # 1_000_000
+obobo BbB # JUMPEQ 1
+
+boobo BoB
+boooo BbB
+bbooo
+boobb BoB
+
+boobo BoB
+oooob
+boobo BoB
+
+#15
+boobo BoB
+boooo BbbbbB
+bbboo
+boooo BoB
+obobo BbooB
+
+#5
+boobo BoB
+boooo BbobB
+bbboo
+boooo BoB
+obobo BbobB
+
+#3
+boobo BoB
+boooo BbbB
+bbboo
+boooo BoB
+obobo BbboB
+
+oboob BbbB
+
+obooo BbooB # LABEL 4 (15)
+boooo BboooooB #SP
+ooooo
+boooo BbooobboB #F
+ooooo
+boooo BbboboobB #i
+ooooo
+boooo BbbbboboB #z
+ooooo
+boooo BbbbboboB #z
+ooooo
+boooo BbooooboB #B
+ooooo
+boooo BbbbobobB #u
+ooooo
+boooo BbbbboboB #z
+ooooo
+boooo BbbbboboB #z
+ooooo
+oboob BbbB # JUMP 3
+
+obooo BbobB # LABEL 5 (5)
+boooo BboooooB #SP
+ooooo
+boooo BbooooboB #B
+ooooo
+boooo BbbbobobB #u
+ooooo
+boooo BbbbboboB #z
+ooooo
+boooo BbbbboboB #z
+ooooo
+oboob BbbB # JUMP 3
+
+obooo BbboB # LABEL 6 (3)
+boooo BboooooB #SP
+ooooo
+boooo BbooobboB #F
+ooooo
+boooo BbboboobB #i
+ooooo
+boooo BbbbboboB #z
+ooooo
+boooo BbbbboboB #z
+ooooo
+oboob BbbB # JUMP 3
+
+obooo BbbB # LABEL 3
+boooo BboboB # LF
+ooooo
+
+oboob BoB # JUMP 0
+
+obooo BbB # LABEL 1

@@ -1,0 +1,47 @@
+boooo BboooooB # Input n=32
+boobb BoB
+boobo BoB
+obobb BboB
+oboob BbB
+
+obooo BboB # LABEL 2
+
+boobb BbB
+
+# n=1
+boobo BbB
+boooo BbB
+obobo BbbB # JUMP 3
+
+# n=2
+boobo BbB
+boooo BboB
+obobo BbbB # JUMP 3
+
+# n>2
+# n-2
+boobo BbB
+boobo BbB
+boooo BboB
+bboob
+obobb BboB # CALL
+
+boobb BboB
+boobb BbB
+boobo BboB
+boobo BbB
+
+# n-1
+boooo BbB
+bboob
+obobb BboB # CALL
+
+bbooo
+obboo # RETURN
+
+obooo BbbB # LABEL 3
+boooo BbB
+obboo # RETURN
+
+obooo BbB # LABEL 1
+oooob
