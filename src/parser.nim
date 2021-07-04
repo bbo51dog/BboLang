@@ -17,7 +17,7 @@ proc newParser*(stream: Stream): Parser
 proc parse*(self: Parser)
 
 proc readOpcode(stream: Stream): OpCode
-proc readNum(stream: Stream): int
+proc readLiteral(stream: Stream): int
 proc skipWhiteSpace(stream: Stream)
 proc skipComment(stream: Stream)
 
@@ -31,7 +31,7 @@ proc parse*(self: Parser) =
     let opcode = self.stream.readOpcode
     var op: Operation
     if opcode.needOpLand:
-      op = newOperation(opcode, newOperand(self.stream.readNum))
+      op = newOperation(opcode, newOperand(self.stream.readLiteral))
     else:
       op = newOperation(opcode)
     self.operations.add(op)
@@ -46,7 +46,7 @@ proc readOpcode(stream: Stream): OpCode =
     rawCode.add(stream.readChar)
   parseEnum[OpCode](rawCode)
 
-proc readNum(stream: Stream): int =
+proc readLiteral(stream: Stream): int =
   stream.skipComment
   stream.skipWhiteSpace
   if stream.readChar != numSeparator:

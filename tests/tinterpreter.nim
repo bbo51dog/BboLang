@@ -1,6 +1,7 @@
 import unittest
 
 import streams
+import strformat
 
 import parser
 import virtual_machine
@@ -13,18 +14,22 @@ proc stringInterpreter(path: string): string =
   vm.run
   outputStream.data
 
+proc assertInterpreter(path: string, expect: string) =
+  let result = stringInterpreter(path)
+  assert result == expect, fmt"'{expect}' expected, '{result}' returned"
+
 suite "Interpreter":
   test "Hello world":
-    assert stringInterpreter("tests/code/HelloWorld.bbolang") == "Hello, World!"
+    assertInterpreter("tests/code/HelloWorld.bbolang", "Hello, World!")
 
   test "Calculate":
-    assert stringInterpreter("tests/code/Calculate.bbolang") == $8
+    assertInterpreter("tests/code/Calculate.bbolang", $8)
 
   test "Jump":
-    assert stringInterpreter("tests/code/Jump.bbolang") == $5
+    assertInterpreter("tests/code/Jump.bbolang", $5)
 
   test "JupIf":
-    assert stringInterpreter("tests/code/JumpIf.bbolang") == $4
+    assertInterpreter("tests/code/JumpIf.bbolang", $4)
 
   test "Heap":
-    assert stringInterpreter("tests/code/Heap.bbolang") == $7
+    assertInterpreter("tests/code/Heap.bbolang", $7)
