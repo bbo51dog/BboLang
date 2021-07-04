@@ -57,6 +57,10 @@ proc exec(vm: VirtualMachine, op: Operation) =
     let x = vm.stack.pop
     let y = vm.stack.pop
     vm.stack.push(int(y / x))
+  of OpCode.Mod:
+    let x = vm.stack.pop
+    let y = vm.stack.pop
+    vm.stack.push(y mod x)
   of OpCode.Push:
     vm.stack.push(op.operand)
   of OpCode.Pop:

@@ -11,6 +11,7 @@ type
     Sub = "bboob"
     Mul = "bbobo"
     Div = "bbobb"
+    Mod = "bbboo"
 
     Push = "boooo"
     Pop = "booob"
@@ -18,7 +19,7 @@ type
     Label = "obooo"
     Jump = "oboob"
     JumpEq = "obobo"
-
+    
     EchoChar = "ooooo"
     EchoInt = "oooob"
 
