@@ -8,7 +8,7 @@ import parser
 suite "Parser":
   test "parse":
     let source = """
-    oobo
+    oooob
     """
     let expect = [
       newOperation(OpCode.EchoInt)

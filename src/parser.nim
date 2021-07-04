@@ -37,7 +37,7 @@ proc parse*(self: Parser) =
 
 proc readOpcode(stream: Stream): OpCode =
   var rawCode = ""
-  for i in 1..4:
+  for i in 1..5:
     stream.skipWhiteSpace
     rawCode.add(stream.readChar)
   parseEnum[OpCode](rawCode)

@@ -7,17 +7,20 @@ type
     value: int
 
   OpCode* {.pure.} = enum
-    Add = "bbbb"
-    Sub = "bbbo"
-    Mul = "bbob"
-    Div = "bboo"
-    Push = "bobb"
-    Pop = "bobo"
-    Label = "obbb"
-    Jump = "obbo"
-    JumpEq = "obob"
-    EchoChar = "oobb"
-    EchoInt = "oobo"
+    Add = "bbooo"
+    Sub = "bboob"
+    Mul = "bbobo"
+    Div = "bbobb"
+
+    Push = "boooo"
+    Pop = "booob"
+
+    Label = "obooo"
+    Jump = "oboob"
+    JumpEq = "obobo"
+
+    EchoChar = "ooooo"
+    EchoInt = "oooob"
 
 const needOpLandList = [
   OpCode.Push,
