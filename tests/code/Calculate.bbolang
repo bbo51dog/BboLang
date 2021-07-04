@@ -1,10 +1,10 @@
-boooo BbboB
-boooo BbooB
-bbobo
-boooo BbbB
-bbooo
-boooo BbbB
-bbobb
-boooo BbB
-bboob
-oooob
+boooo BbboB # PUSH 6
+boooo BbooB # PUSH 4
+bbobo       # MUL
+boooo BbbB  # PUSH 3
+bbooo       # ADD
+boooo BbbB  # PUSH 3
+bbobb       # DIV
+boooo BbB   # PUSH 1
+bboob       # SUB
+oooob       # ECHO_INT

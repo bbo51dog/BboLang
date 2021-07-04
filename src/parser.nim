@@ -10,6 +10,7 @@ type
     operations*: seq[Operation]
 
 const numSeparator = 'B'
+const commentStart = '#'
 
 
 proc newParser*(stream: Stream): Parser
@@ -18,6 +19,7 @@ proc parse*(self: Parser)
 proc readOpcode(stream: Stream): OpCode
 proc readNum(stream: Stream): int
 proc skipWhiteSpace(stream: Stream)
+proc skipComment(stream: Stream)
 
 
 proc newParser*(stream: Stream): Parser =
@@ -33,16 +35,19 @@ proc parse*(self: Parser) =
     else:
       op = newOperation(opcode)
     self.operations.add(op)
+    self.stream.skipComment
     self.stream.skipWhiteSpace
 
 proc readOpcode(stream: Stream): OpCode =
   var rawCode = ""
   for i in 1..5:
+    stream.skipComment
     stream.skipWhiteSpace
     rawCode.add(stream.readChar)
   parseEnum[OpCode](rawCode)
 
 proc readNum(stream: Stream): int =
+  stream.skipComment
   stream.skipWhiteSpace
   if stream.readChar != numSeparator:
     error("Invalid number")
@@ -64,3 +69,9 @@ proc readNum(stream: Stream): int =
 proc skipWhiteSpace(stream: Stream) =
   while stream.peekStr(1).isEmptyOrWhitespace and not stream.atEnd:
     discard stream.readChar
+
+proc skipComment(stream: Stream) =
+  stream.skipWhiteSpace
+  if stream.peekChar == commentStart:
+    while stream.peekChar != '\n' and not stream.atEnd:
+      discard stream.readChar
