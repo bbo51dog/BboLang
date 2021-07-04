@@ -1,0 +1,4 @@
+boooo BbbbB # PUSH 7
+boobb BbbB # STORE 1
+boobo BbbB # LOAD 1
+oooob #ECHOINT

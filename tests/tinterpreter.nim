@@ -25,3 +25,6 @@ suite "Interpreter":
 
   test "JupIf":
     assert stringInterpreter("tests/code/JumpIf.bbolang") == $4
+
+  test "Heap":
+    assert stringInterpreter("tests/code/Heap.bbolang") == $7

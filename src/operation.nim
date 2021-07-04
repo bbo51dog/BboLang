@@ -15,6 +15,8 @@ type
 
     Push = "boooo"
     Pop = "booob"
+    Load = "boobo"
+    Store = "boobb"
 
     Label = "obooo"
     Jump = "oboob"
@@ -25,6 +27,8 @@ type
 
 const needOpLandList = [
   OpCode.Push,
+  OpCode.Load,
+  OpCode.Store,
   OpCode.Label,
   OpCode.Jump,
   OpCode.JumpEq,

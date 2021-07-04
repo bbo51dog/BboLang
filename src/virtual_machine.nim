@@ -7,8 +7,12 @@ type
   Stack = ref object
     values: seq[int]
 
+  Heap = ref object
+    values: Table[int, int]
+
   VirtualMachine = ref object
     stack: Stack
+    heap: Heap
     operations: seq[Operation]
     currentOpIndex: int
     outputStream: Stream
@@ -23,10 +27,14 @@ proc exec(vm: VirtualMachine, op: Operation)
 proc pop(stack: Stack): int
 proc push(stack: Stack, value: int)
 
+proc load(heap: Heap, address: int): int
+proc store(heap: Heap, address: int, value: int)
+
 
 proc newVirtualMachine*(operations: openArray[Operation], outputStream: Stream): VirtualMachine =
   new result
   result.stack = Stack()
+  result.heap = Heap()
   result.operations = @operations
   result.outputStream = outputStream
   for i, op in operations:
@@ -65,6 +73,10 @@ proc exec(vm: VirtualMachine, op: Operation) =
     vm.stack.push(op.operand)
   of OpCode.Pop:
     discard vm.stack.pop
+  of OpCode.Load:
+    vm.stack.push(vm.heap.load(op.operand))
+  of OpCode.Store:
+    vm.heap.store(op.operand, vm.stack.pop)
   of OpCode.Label:
     discard
   of OpCode.Jump:
@@ -83,3 +95,10 @@ proc push(stack: Stack, value: int) =
 
 proc pop(stack: Stack): int =
   stack.values.pop
+
+
+proc load(heap: Heap, address: int): int =
+  heap.values[address]
+
+proc store(heap: Heap, address: int, value: int) =
+  heap.values[address] = value
